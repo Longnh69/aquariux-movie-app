@@ -8,9 +8,9 @@ import { GenreChip } from './PrimaryChip';
 
 interface MovieCardProps {
   movie: Movie;
-  inWatchlist: boolean;
+  inWatchlist?: boolean;
   onPress: () => void;
-  onBookmark: () => void;
+  onBookmark?: () => void;
 }
 
 export const MovieCard: FC<MovieCardProps> = ({

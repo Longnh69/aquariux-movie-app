@@ -1,14 +1,30 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../presentation/Home';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import HomeScreen from '../features/home/HomePage';
+import { RootStackParamList } from '../types/NavigationTypes';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator();
+
+const BottonTab: React.FC = () => {
+  return (
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Tab">
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="Tab"
+        component={BottonTab}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

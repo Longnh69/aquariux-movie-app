@@ -6,7 +6,7 @@ import { styles } from './styles';
 interface DropdownProps {
   items: DropdownItem[];
   selected: string;
-  onSelect: (value: string) => void;
+  onSelect: (value: any) => void;
   prefix?: string;
 }
 
