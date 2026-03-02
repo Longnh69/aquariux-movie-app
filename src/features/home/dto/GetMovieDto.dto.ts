@@ -1,10 +1,10 @@
 export interface GetMovieListDto {
   language?: 'en-US' | string;
   page?: number;
-  sort_by?: `${SortField}.${SortOrder}`;
+  sort_by?: `${SortField}.${SortOrder}` | '';
   type: 'now_playing' | 'popular' | 'upcoming';
 }
 
-type SortOrder = 'asc' | 'desc';
+export type SortOrder = 'asc' | 'desc';
 
-type SortField = 'popularity' | 'release_date' | 'title';
+export type SortField = 'popularity' | 'release_date' | 'title';

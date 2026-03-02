@@ -3,6 +3,7 @@ import { Movie } from '../types/ComponentsTypes';
 import { Image, Text, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { RatingBadge } from './RatingBadge';
+import appConfig from '../config/app.config';
 
 interface RecommendCardProps {
   movie: Movie;
@@ -16,13 +17,13 @@ export const RecommendCard: FC<RecommendCardProps> = ({ movie, onPress }) => (
     style={styles.recCard}
   >
     <Image
-      source={{ uri: movie.poster }}
+      source={{ uri: `${appConfig.IMG.poster}${movie.poster_path}` }}
       style={styles.recPoster}
       resizeMode="cover"
     />
     <Text style={styles.recTitle} numberOfLines={2}>
-      {movie.title}
+      {movie.original_title}
     </Text>
-    <RatingBadge rating={movie.rating} />
+    <RatingBadge rating={movie.vote_average} />
   </TouchableOpacity>
 );

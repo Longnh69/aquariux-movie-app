@@ -30,12 +30,13 @@ const useGetMovieList = (getMovieListParams: GetMovieListParam) => {
   );
 
   const { data, isLoading } = query;
-  // const { data: WaveToolData = {} } = data ?? {}
+  const { results = {} } = data ?? {}
 
   useEffect(() => {
     if (!isLoading) {
-      setMovie(data as Movie[]);
+      setMovie(results as Movie[]);
     }
+    console.log('gogo', data);
   }, [data]);
 
   return query;

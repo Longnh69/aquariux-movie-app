@@ -5,6 +5,7 @@ import { styles } from './styles';
 import { shadows } from '../theme/common';
 import { StarRating } from './StarRating';
 import { GenreChip } from './PrimaryChip';
+import appConfig from '../config/app.config';
 
 interface MovieCardProps {
   movie: Movie;
@@ -27,7 +28,7 @@ export const MovieCard: FC<MovieCardProps> = ({
     {/* Poster */}
     <View style={[styles.posterWrapper, shadows.poster]}>
       <Image
-        source={{ uri: movie.poster }}
+        source={{ uri: `${appConfig.IMG.poster}/${movie.poster_path}` }}
         style={styles.poster}
         resizeMode="cover"
       />
@@ -54,12 +55,12 @@ export const MovieCard: FC<MovieCardProps> = ({
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.cardDate}>{movie.date}</Text>
-      <StarRating rating={movie.rating} />
+      <Text style={styles.cardDate}>{movie.release_date}</Text>
+      <StarRating rating={movie.vote_average} />
 
       <View style={styles.genreRow}>
-        {movie.genre.slice(0, 2).map(g => (
-          <GenreChip key={g} label={g} />
+        {movie?.genre_ids?.map(g => (
+          <GenreChip key={g} label={g.toString()} />
         ))}
       </View>
 

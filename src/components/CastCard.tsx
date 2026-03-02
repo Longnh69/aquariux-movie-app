@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { CastMember } from '../types/ComponentsTypes';
 import { Image, Text, View } from 'react-native';
 import { styles } from './styles';
+import appConfig from '../config/app.config';
+import { CastMember } from '../features/detail/dto/crew-member.dto';
 
 interface CastCardProps {
   member: CastMember;
@@ -10,15 +11,15 @@ interface CastCardProps {
 export const CastCard: FC<CastCardProps> = ({ member }) => (
   <View style={styles.castCard}>
     <Image
-      source={{ uri: member.img }}
+      source={{ uri: `${appConfig.IMG.profile}${member?.profile_path}` }}
       style={styles.castImage}
       resizeMode="cover"
     />
     <Text style={styles.castName} numberOfLines={2}>
-      {member.name}
+      {member?.name}
     </Text>
     <Text style={styles.castRole} numberOfLines={1}>
-      {member.role}
+      {member?.character}
     </Text>
   </View>
 );

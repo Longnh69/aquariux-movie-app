@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react';
+import React, {useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,6 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   type DropdownItem,
   type Movie,
-  type MovieCategory,
 } from '../../types/ComponentsTypes';
 import { RootStackParamList } from '../../types/NavigationTypes';
 import { useMovieFilterStore } from './hooks/useMovieFilterStore';
@@ -35,9 +34,9 @@ const CATEGORY_OPTIONS: DropdownItem[] = [
 ];
 
 const SORT_OPTIONS: DropdownItem[] = [
-  { value: 'alpha', label: 'By alphabetical order' },
-  { value: 'rating', label: 'By rating' },
-  { value: 'date', label: 'By release date' },
+  { value: 'title.asc', label: 'By alphabetical order' },
+  { value: 'popularity.asc', label: 'By rating' },
+  { value: 'release_date.asc', label: 'By release date' },
 ];
 
 const INITIAL_VISIBLE = 4;
@@ -56,10 +55,14 @@ const HomeScreen = () => {
   } = useMovieFilterStore();
   const [visible, setVisible] = useState(INITIAL_VISIBLE);
 
-  const {} = useGetMovieList({
+  const {refetch} = useGetMovieList({
     type: category,
     page,
+    sort_by: sortKey,
+
   });
+
+  const {data: movies} = useMovieFilterStore()
 
   const handleMoviePress = useCallback(
     (movie: Movie) => {
@@ -68,16 +71,12 @@ const HomeScreen = () => {
     [navigation],
   );
 
-  const handleCategoryChange = useCallback(
-    (value: MovieCategory) => {
-      setCategory(value);
-      setVisible(INITIAL_VISIBLE);
-    },
-    [setCategory],
-  );
+  useEffect(() => {
+    refetch()
+  }, [category, sortKey, searchQuery, refetch]);
 
-  const visibleMovies: any[] = [];
-  const remaining = 0;
+  const visibleMovies = movies?.slice(0, visible) || [];
+  const remaining     = (movies?.length - visible) || 0;
 
   const renderItem = ({ item }: ListRenderItemInfo<Movie>) => (
     <MovieCard movie={item} onPress={() => handleMoviePress(item)} />
@@ -106,7 +105,7 @@ const HomeScreen = () => {
         <Dropdown
           items={CATEGORY_OPTIONS}
           selected={category}
-          onSelect={handleCategoryChange}
+          onSelect={value => { setCategory(value); setVisible(INITIAL_VISIBLE); }}
         />
         <View style={styles.filterGap} />
         <Dropdown
@@ -136,7 +135,8 @@ const HomeScreen = () => {
           </View>
           <PrimaryButton
             label="Search"
-            onPress={() => {}}
+            onPress={() => {
+            }}
             style={styles.searchBtn}
           />
         </View>

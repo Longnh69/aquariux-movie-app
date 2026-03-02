@@ -27,7 +27,7 @@ interface MovieFilterState {
 
 export const useMovieFilterStore = create<MovieFilterState>(set => ({
   category: 'now_playing',
-  sortKey: 'date',
+  sortKey: '',
   searchQuery: '',
   ratingFilter: 'all',
   sortOrder: 'asc',

@@ -1,33 +1,24 @@
+import {type SortField, type SortOrder } from "../features/home/dto/GetMovieDto.dto";
+
 export type MovieCategory = 'now_playing' | 'upcoming' | 'popular';
-export type SortKey = 'alpha' | 'rating' | 'date';
+export type SortKey = `${SortField}.${SortOrder}` | '';
 export type RatingFilter = 'all' | 'high' | 'mid' | 'low';
 
-export interface CastMember {
-  name: string;
-  role: string;
-  img: string;
-}
-
 export interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
   id: number;
-  title: string;
-  year: number;
-  rating: number;
-  genre: string[];
-  runtime: string;
-  status: string;
-  language: string;
-  date: string;
-  dateSort: number;
-  director: string;
-  writer: string;
-  tagline: string;
+  original_language: string;
+  original_title: string;
   overview: string;
-  poster: string;
-  backdrop: string;
-  cast: CastMember[];
-  recommendations: number[];
-  category: MovieCategory;
+  popularity: number;
+  poster_path: string;
+  release_date: string;        // ISO 8601 format: "YYYY-MM-DD"
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
 
 export interface DropdownItem {
